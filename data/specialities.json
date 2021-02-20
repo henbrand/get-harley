@@ -1,0 +1,26 @@
+[
+  {
+    "specialityId": 1,
+    "name": " pigmentation"
+  },
+  {
+    "specialityId": 2,
+    "name": " acne"
+  },
+  {
+    "specialityId": 3,
+    "name": " eczema"
+  },
+  {
+    "specialityId": 4,
+    "name": " scarring"
+  },
+  {
+    "specialityId": 5,
+    "name": " wrinkles"
+  },
+  {
+    "specialityId": 6,
+    "name": " general"
+  }
+]
