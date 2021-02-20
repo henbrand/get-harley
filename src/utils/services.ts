@@ -11,9 +11,22 @@ export type TimeSlot = {
   endTime: DateTime;
 };
 
+export const getInitialSlot = (selectedDate: DateTime) => {
+  if (
+    selectedDate.hasSame(DateTime.local(), "day") && // this condition
+    selectedDate.hour > timeSettings.openTime
+  ) {
+    return selectedDate.hour + 1;
+  }
+
+  return timeSettings.openTime;
+};
+
 export const getTimeslots = (selectedDate: DateTime) => {
+  const initialSlot = getInitialSlot(selectedDate);
+
   let startTime: DateTime = selectedDate
-    .set({ hour: timeSettings.openTime })
+    .set({ hour: initialSlot })
     .startOf("hour");
   let endTime: DateTime = selectedDate.set({ hour: timeSettings.closeTime });
   let timeslots: TimeSlot[] = [];
