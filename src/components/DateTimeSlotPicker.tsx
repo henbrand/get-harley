@@ -1,12 +1,27 @@
 import { FunctionComponent, useMemo, useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { DateTime } from "luxon";
+import styled from "styled-components";
+
 import { getTimeslots, isWeekendDay } from "../utils/services";
-import { timeFormatter } from "../utils/formatters";
+import { formatTimeSlot } from "../utils/formatters";
+import { Button } from "./atoms/Button";
+import { Colors } from "../styles/colors";
+
+const TimeSlotContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  height: 200px;
+  width: 150px;
+  overflow-x: scroll;
+  border: 2px solid ${Colors.lightPink};
+  justify-content: center;
+`;
 
 export const DateTimeSlotPicker: FunctionComponent = () => {
   const now = DateTime.now();
   const [selectedDate, setSelectedDate] = useState(now);
+  const [selectedStartTime, setSelectedStartTime] = useState<DateTime>();
 
   const handleDateChange = (date: DateTime | null) => {
     date && setSelectedDate(date);
@@ -32,16 +47,22 @@ export const DateTimeSlotPicker: FunctionComponent = () => {
         }}
         shouldDisableDate={isWeekendDay}
       />
-      {timeslots.map((timeslot) => {
-        const { startTime, endTime } = timeslot;
-        return (
-          <div key={`${startTime.hour} - ${endTime.hour}`}>
-            <button>
-              {timeFormatter(startTime)} - {timeFormatter(endTime)}
-            </button>
-          </div>
-        );
-      })}
+      {timeslots.length < 1 ? (
+        <p> No available time slots, try another day!</p>
+      ) : (
+        <TimeSlotContainer>
+          {timeslots.map((timeslot) => {
+            const { startTime, endTime } = timeslot;
+            return (
+              <Button
+                buttonText={formatTimeSlot(startTime, endTime)}
+                selected={selectedStartTime?.equals(startTime)}
+                onClick={() => setSelectedStartTime(startTime)}
+              />
+            );
+          })}
+        </TimeSlotContainer>
+      )}
     </div>
   );
 };
