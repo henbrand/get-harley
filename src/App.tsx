@@ -1,11 +1,13 @@
-import "./App.css";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import LuxonUtils from "@date-io/luxon";
+
 import { Home } from "./pages/Home";
 
 function App() {
   return (
-    <div className="App">
+    <MuiPickersUtilsProvider utils={LuxonUtils}>
       <Home />
-    </div>
+    </MuiPickersUtilsProvider>
   );
 }
 
