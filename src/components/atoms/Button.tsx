@@ -3,12 +3,12 @@ import styled, { css } from "styled-components";
 
 import { Colors } from "../../styles/colors";
 
-type Props = {
+interface Props {
   buttonText: string;
   onClick: () => void;
-  selected: boolean | undefined;
+  selected?: boolean | undefined;
   square?: boolean;
-};
+}
 
 const StyledButton = styled.button<{
   square?: boolean;
