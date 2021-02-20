@@ -1,6 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react";
+
 import { getSpecialities } from "../apiClient/client";
 import { Speciality } from "../apiClient/types";
+import { DateTimeSlotPicker } from "../components/DateTimeSlotPicker";
 
 export const Home: FunctionComponent = () => {
   const [specialities, setSpecialities] = useState<Speciality[]>();
@@ -24,6 +26,7 @@ export const Home: FunctionComponent = () => {
       {specialities?.map((speciality) => (
         <button>{speciality.name}</button>
       ))}
+      <DateTimeSlotPicker />
     </div>
   );
 };
