@@ -1,10 +1,17 @@
 import { FunctionComponent, useEffect, useState } from "react";
+import { DateTime } from "luxon";
+import styled from "styled-components";
 
+import logo from "../logo.png";
 import { Button } from "../components/atoms/Button";
 import { getSpecialities } from "../apiClient/client";
 import { Speciality } from "../apiClient/types";
 import { DateTimeSlotPicker } from "../components/DateTimeSlotPicker";
-import { DateTime } from "luxon";
+
+const Logo = styled.img`
+  height: 100%;
+  width: 50%;
+`;
 
 export const Home: FunctionComponent = () => {
   const [specialities, setSpecialities] = useState<Speciality[]>();
@@ -27,7 +34,7 @@ export const Home: FunctionComponent = () => {
   }, []);
   return (
     <div>
-      <h1>Get Harley</h1>
+      <Logo src={logo} className="get-harley-logo" alt="logo" />
       <h1>Select a reason for booking:</h1>
       {specialities?.map((speciality) => {
         return (
