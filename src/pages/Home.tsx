@@ -1,12 +1,12 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { DateTime } from "luxon";
 import styled from "styled-components";
 
 import logo from "../logo.png";
 import { Button } from "../components/atoms/Button";
-import { getSpecialities } from "../apiClient/client";
 import { Speciality } from "../apiClient/types";
 import { DateTimeSlotPicker } from "../components/DateTimeSlotPicker";
+import { useSpecialities } from "../hooks/useSpecialities";
 
 const Logo = styled.img`
   height: 100%;
@@ -14,24 +14,10 @@ const Logo = styled.img`
 `;
 
 export const Home: FunctionComponent = () => {
-  const [specialities, setSpecialities] = useState<Speciality[]>();
   const [chosenSpeciality, setChosenSpeciality] = useState<Speciality>();
   const [selectedDateTime, setSelectedDateTime] = useState<DateTime>();
+  const { specialities, error } = useSpecialities();
 
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    const retrieveSpecialities = async () => {
-      try {
-        const response = await getSpecialities();
-        setSpecialities(response.data);
-      } catch (error) {
-        setError(error);
-      }
-    };
-
-    retrieveSpecialities();
-  }, []);
   return (
     <div>
       <Logo src={logo} className="get-harley-logo" alt="logo" />
@@ -48,6 +34,7 @@ export const Home: FunctionComponent = () => {
           />
         );
       })}
+      {error && <p>{error}</p>}
       {chosenSpeciality && (
         <DateTimeSlotPicker
           selectedDateTime={selectedDateTime}
