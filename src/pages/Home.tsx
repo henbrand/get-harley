@@ -4,9 +4,13 @@ import { Button } from "../components/atoms/Button";
 import { getSpecialities } from "../apiClient/client";
 import { Speciality } from "../apiClient/types";
 import { DateTimeSlotPicker } from "../components/DateTimeSlotPicker";
+import { DateTime } from "luxon";
 
 export const Home: FunctionComponent = () => {
   const [specialities, setSpecialities] = useState<Speciality[]>();
+  const [chosenSpeciality, setChosenSpeciality] = useState<Speciality>();
+  const [selectedDateTime, setSelectedDateTime] = useState<DateTime>();
+
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -37,7 +41,15 @@ export const Home: FunctionComponent = () => {
           />
         );
       })}
-      <DateTimeSlotPicker />
+      {chosenSpeciality && (
+        <DateTimeSlotPicker
+          selectedDateTime={selectedDateTime}
+          setSelectedDateTime={setSelectedDateTime}
+        />
+      )}
+      {chosenSpeciality && selectedDateTime && (
+        <Button buttonText="Confirm" onClick={() => {}} />
+      )}
     </div>
   );
 };

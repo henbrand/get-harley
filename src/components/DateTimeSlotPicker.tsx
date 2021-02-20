@@ -18,10 +18,17 @@ const TimeSlotContainer = styled.div`
   justify-content: center;
 `;
 
-export const DateTimeSlotPicker: FunctionComponent = () => {
+interface Props {
+  selectedDateTime: DateTime | undefined;
+  setSelectedDateTime: (date: DateTime) => void;
+}
+
+export const DateTimeSlotPicker: FunctionComponent<Props> = ({
+  selectedDateTime,
+  setSelectedDateTime,
+}) => {
   const now = DateTime.now();
   const [selectedDate, setSelectedDate] = useState(now);
-  const [selectedStartTime, setSelectedStartTime] = useState<DateTime>();
 
   const handleDateChange = (date: DateTime | null) => {
     date && setSelectedDate(date);
@@ -34,6 +41,7 @@ export const DateTimeSlotPicker: FunctionComponent = () => {
       <h1>Select a time slot:</h1>
       <KeyboardDatePicker
         disableToolbar
+        autoOk
         disablePast
         variant="inline"
         format="dd/MM/yyyy"
@@ -56,8 +64,8 @@ export const DateTimeSlotPicker: FunctionComponent = () => {
             return (
               <Button
                 buttonText={formatTimeSlot(startTime, endTime)}
-                selected={selectedStartTime?.equals(startTime)}
-                onClick={() => setSelectedStartTime(startTime)}
+                selected={selectedDateTime?.equals(startTime)}
+                onClick={() => setSelectedDateTime(startTime)}
               />
             );
           })}
