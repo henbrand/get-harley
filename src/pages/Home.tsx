@@ -24,7 +24,9 @@ export const Home: FunctionComponent = () => {
     <div>
       <h1>Select a reason for booking:</h1>
       {specialities?.map((speciality) => (
-        <button>{speciality.name}</button>
+        <div key={speciality.specialityId}>
+          <button>{speciality.name}</button>
+        </div>
       ))}
       <DateTimeSlotPicker />
     </div>
