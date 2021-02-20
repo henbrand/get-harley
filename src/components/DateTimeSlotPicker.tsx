@@ -1,7 +1,7 @@
 import { FunctionComponent, useMemo, useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { DateTime } from "luxon";
-import { getTimeslots } from "../utils/services";
+import { getTimeslots, isWeekendDay } from "../utils/services";
 import { timeFormatter } from "../utils/formatters";
 
 export const DateTimeSlotPicker: FunctionComponent = () => {
@@ -19,6 +19,7 @@ export const DateTimeSlotPicker: FunctionComponent = () => {
       <h1>Select a time slot:</h1>
       <KeyboardDatePicker
         disableToolbar
+        disablePast
         variant="inline"
         format="dd/MM/yyyy"
         margin="normal"
@@ -29,6 +30,7 @@ export const DateTimeSlotPicker: FunctionComponent = () => {
         KeyboardButtonProps={{
           "aria-label": "change date",
         }}
+        shouldDisableDate={isWeekendDay}
       />
       {timeslots.map((timeslot) => {
         const { startTime, endTime } = timeslot;

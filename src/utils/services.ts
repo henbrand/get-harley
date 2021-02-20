@@ -47,3 +47,7 @@ export const getTimeslots = (selectedDate: DateTime) => {
 
   return timeslots;
 };
+
+export const isWeekendDay = (date: DateTime | null) => {
+  return date?.weekday === 6 || date?.weekday === 7;
+};
