@@ -22,6 +22,7 @@ export const Home: FunctionComponent = () => {
   }, []);
   return (
     <div>
+      <h1>Get Harley</h1>
       <h1>Select a reason for booking:</h1>
       {specialities?.map((speciality) => (
         <div key={speciality.specialityId}>
