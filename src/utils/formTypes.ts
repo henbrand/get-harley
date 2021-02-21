@@ -8,7 +8,7 @@ import {
   Ref,
 } from "react-hook-form";
 
-import { Speciality } from "../apiClient/types";
+import { Practitioner, Speciality } from "../apiClient/types";
 
 export enum FIELD_ID {
   FIRST_NAME = "firstName",
@@ -17,6 +17,7 @@ export enum FIELD_ID {
   CONTACT_NUMBER = "contactNumber",
   SELECTED_DATE_TIME = "selectedDateTime",
   SPECIALITY = "speciality",
+  SELECTED_PRACTITIONER = "selectedPractitioner",
 }
 
 export type Form = {
@@ -26,6 +27,7 @@ export type Form = {
   [FIELD_ID.CONTACT_NUMBER]: string;
   [FIELD_ID.SELECTED_DATE_TIME]: DateTime;
   [FIELD_ID.SPECIALITY]: Speciality;
+  [FIELD_ID.SELECTED_PRACTITIONER]: Practitioner;
 };
 
 export type RHFSetValue = (

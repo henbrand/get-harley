@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import { FunctionComponent, useState, useEffect, useCallback } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -7,8 +7,11 @@ import { Colors } from "../styles/colors";
 import { TimeSlotTab } from "./Tabs/TimeSlotTab";
 import { TabPanel } from "./Tabs/components/TabPanel";
 import { PersonalDetailsTab } from "./Tabs/PersonalDetailsTab";
+import { PractitionerDetailsTab } from "./Tabs/PractitionerDetailsTab";
 import { useIsMobile } from "../styles/media";
 import { FIELD_ID, Form } from "../utils/formTypes";
+import { useAvailableTimeslot } from "../hooks/useAvailableTimeslot";
+import { Practitioner } from "../apiClient/types";
 
 const TAB_LABELS = {
   TIME_SLOT: "Pick a time that works for you",
@@ -29,17 +32,24 @@ const TabContainer = styled.div`
 
 export const FormTabs: FunctionComponent = () => {
   const { register, handleSubmit, watch, setValue, errors } = useForm<Form>();
+
   const [tabValue, setTabValue] = useState(0);
   const [availablePractitioners, setPractitioners] = useState<Practitioner[]>();
+
   const { isMobile } = useIsMobile();
   const { sendSelectedTimeslot } = useAvailableTimeslot();
+
+  console.log("🚀 ~ file: FormTabs.tsx ~ line 32 ~ errors", errors);
 
   useEffect(() => {
     register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
     register({ name: FIELD_ID.SPECIALITY }, { required: true });
+    register({ name: FIELD_ID.SELECTED_PRACTITIONER });
   }, [register]);
 
   const values = watch();
+  console.log("🚀 ~ file: FormTabs.tsx ~ line 59 ~ values", values);
+
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
   };
@@ -60,6 +70,8 @@ export const FormTabs: FunctionComponent = () => {
     },
     [sendSelectedTimeslot]
   );
+
+  // const onConfirmSubmit = useCallback(async (data: Form) => {}, []);
   return (
     <TabContainer>
       <Tabs
@@ -114,8 +126,12 @@ export const FormTabs: FunctionComponent = () => {
         index={2}
         title="Select your practitioner"
       >
-        Item Three
-        {/* TODO: <PractitionerDetailsTab /> */}
+        <PractitionerDetailsTab
+          practitioners={availablePractitioners}
+          setSelectedPractitioner={(value) =>
+            setValue(FIELD_ID.SELECTED_PRACTITIONER, value)
+          }
+        />
       </TabPanel>
     </TabContainer>
   );
