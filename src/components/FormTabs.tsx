@@ -42,6 +42,7 @@ export const FormTabs = () => {
         indicatorColor="secondary"
         textColor="secondary"
         onChange={handleTabChange}
+        variant={isMobile ? "scrollable" : "fullWidth"}
         scrollButtons="on"
       >
         <Tab label={TAB_LABELS.TIME_SLOT} />
