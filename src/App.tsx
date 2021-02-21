@@ -11,9 +11,20 @@ import { Colors } from "./styles/colors";
 
 const theme = responsiveFontSizes(
   createMuiTheme({
+    typography: {
+      h1: {
+        fontSize: "20px",
+      },
+      h2: {
+        fontSize: "16px",
+      },
+    },
     palette: {
       primary: {
         main: Colors.primary,
+      },
+      secondary: {
+        main: Colors.secondary,
       },
     },
   })
