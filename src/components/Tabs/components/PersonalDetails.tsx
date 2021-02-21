@@ -1,7 +1,8 @@
-import { FunctionComponent, ChangeEvent } from "react";
+import { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Typography, TextField } from "@material-ui/core";
-import { FIELD_ID, Form, SetValue } from "../../../utils/formTypes";
+
+import { FIELD_ID, RHFRegister, RHFError } from "../../../utils/formTypes";
 
 const Break = styled.div`
   height: 35px;
@@ -14,14 +15,21 @@ const Input = styled(TextField)`
 `;
 
 interface Props {
-  values: Form;
-  setValue: SetValue;
+  register: RHFRegister;
+  errors: RHFError;
 }
 
 export const PersonalDetails: FunctionComponent<Props> = ({
-  values,
-  setValue,
+  errors,
+  register,
 }) => {
+  const errorMessages = {
+    firstName: errors[FIELD_ID.FIRST_NAME]?.type,
+    lastName: errors[FIELD_ID.LAST_NAME]?.type,
+    email: errors[FIELD_ID.EMAIL]?.type,
+    contactNumber: errors[FIELD_ID.CONTACT_NUMBER]?.type,
+  };
+
   return (
     <>
       <Break />
@@ -31,19 +39,18 @@ export const PersonalDetails: FunctionComponent<Props> = ({
           required
           label="First Name"
           color="secondary"
-          value={values.firstName}
-          onChange={(event: ChangeEvent<{ value: string }>) =>
-            setValue(FIELD_ID.FIRST_NAME, event.target.value)
-          }
+          inputRef={register({ required: true })}
+          name={FIELD_ID.FIRST_NAME}
+          error={!!errorMessages.email}
         />
+
         <Input
           required
           label="Last Name"
           color="secondary"
-          value={values.lastName}
-          onChange={(event: ChangeEvent<{ value: string }>) =>
-            setValue(FIELD_ID.LAST_NAME, event.target.value)
-          }
+          inputRef={register({ required: true })}
+          name={FIELD_ID.LAST_NAME}
+          error={!!errorMessages.lastName}
         />
       </div>
       <div>
@@ -52,20 +59,18 @@ export const PersonalDetails: FunctionComponent<Props> = ({
           label="Email"
           color="secondary"
           type="email"
-          value={values.email}
-          onChange={(event: ChangeEvent<{ value: string }>) =>
-            setValue(FIELD_ID.EMAIL, event.target.value)
-          }
+          inputRef={register({ required: true })}
+          name={FIELD_ID.EMAIL}
+          error={!!errorMessages.email}
         />
         <Input
           required
           label="Contact number"
           color="secondary"
           type="number"
-          value={values.contactNumber}
-          onChange={(event: ChangeEvent<{ value: string }>) =>
-            setValue(FIELD_ID.CONTACT_NUMBER, event.target.value)
-          }
+          inputRef={register({ required: true })}
+          name={FIELD_ID.CONTACT_NUMBER}
+          error={!!errorMessages.contactNumber}
         />
       </div>
     </>

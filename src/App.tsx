@@ -18,6 +18,9 @@ const theme = responsiveFontSizes(
       h2: {
         fontSize: "16px",
       },
+      h3: {
+        fontSize: "12px",
+      },
     },
     palette: {
       primary: {

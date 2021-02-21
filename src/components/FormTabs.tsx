@@ -28,15 +28,11 @@ const TabContainer = styled.div`
 `;
 
 export const FormTabs: FunctionComponent = () => {
-  const { register, handleSubmit, watch, setValue } = useForm<Form>();
+  const { register, handleSubmit, watch, setValue, errors } = useForm<Form>();
   const [tabValue, setTabValue] = useState(0);
   const { isMobile } = useIsMobile();
 
   useEffect(() => {
-    register({ name: FIELD_ID.FIRST_NAME }, { required: true });
-    register({ name: FIELD_ID.LAST_NAME }, { required: true });
-    register({ name: FIELD_ID.EMAIL }, { required: true });
-    register({ name: FIELD_ID.CONTACT_NUMBER }, { required: true });
     register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
     register({ name: FIELD_ID.SPECIALITY }, { required: true });
   }, [register]);
@@ -86,8 +82,14 @@ export const FormTabs: FunctionComponent = () => {
         value={tabValue}
         index={1}
         title="Tell us about yourself"
+        showButton
       >
-        <PersonalDetailsTab values={values} setValue={setValue} />
+        <PersonalDetailsTab
+          values={values}
+          setValue={setValue}
+          errors={errors}
+          register={register}
+        />
       </TabPanel>
       <TabPanel
         buttonText="Confirm"

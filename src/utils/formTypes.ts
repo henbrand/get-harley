@@ -1,4 +1,13 @@
 import { DateTime } from "luxon";
+import {
+  RegisterOptions,
+  FieldElement,
+  FieldValues,
+  DeepMap,
+  FieldError,
+  Ref,
+} from "react-hook-form";
+
 import { Speciality } from "../apiClient/types";
 
 export enum FIELD_ID {
@@ -19,7 +28,7 @@ export type Form = {
   [FIELD_ID.SPECIALITY]: Speciality;
 };
 
-export type SetValue = (
+export type RHFSetValue = (
   name: string,
   value: unknown,
   config?:
@@ -29,3 +38,9 @@ export type SetValue = (
       }>
     | undefined
 ) => void;
+
+export type RHFRegister = (
+  rules?: RegisterOptions
+) => (ref: (FieldElement<FieldValues> & Ref) | null) => void;
+
+export type RHFError = DeepMap<Form, FieldError>;
