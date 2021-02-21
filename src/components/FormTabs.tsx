@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import styled from "styled-components";
 import { DateTime } from "luxon";
+import { useForm } from "react-hook-form";
 
 import { Colors } from "../styles/colors";
 import { TimeSlotTab } from "./Tabs/TimeSlotTab";
@@ -26,15 +27,43 @@ const TabContainer = styled.div`
   flex-direction: column;
 `;
 
-export const FormTabs = () => {
+enum FIELD_ID {
+  FIRST_NAME = "firstName",
+  LAST_NAME = "lastName",
+  EMAIL = "email",
+  CONTACT_NUMBER = "contactNumber",
+  SELECTED_DATE_TIME = "selectedDateTime",
+}
+
+type Form = {
+  [FIELD_ID.FIRST_NAME]: string;
+  [FIELD_ID.LAST_NAME]: string;
+  [FIELD_ID.EMAIL]: string;
+  [FIELD_ID.CONTACT_NUMBER]: string;
+  [FIELD_ID.SELECTED_DATE_TIME]: DateTime;
+};
+
+export const FormTabs: FunctionComponent = () => {
+  const { register, handleSubmit, watch, setValue } = useForm<Form>();
   const [tabValue, setTabValue] = useState(0);
   const [selectedDateTime, setSelectedDateTime] = useState<DateTime>();
   const { isMobile } = useIsMobile();
 
+  useEffect(() => {
+    register({ name: FIELD_ID.FIRST_NAME }, { required: true });
+    register({ name: FIELD_ID.LAST_NAME }, { required: true });
+    register({ name: FIELD_ID.EMAIL }, { required: true });
+    register({ name: FIELD_ID.CONTACT_NUMBER }, { required: true });
+    register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
+  }, [register]);
+
+  const values = watch();
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
   };
-
+  const onSubmit = (data: Form) => {
+    setTabValue(2);
+  };
   return (
     <TabContainer>
       <Tabs
@@ -57,13 +86,15 @@ export const FormTabs = () => {
         title="Select a time slot"
       >
         <TimeSlotTab
-          selectedDateTime={selectedDateTime}
-          setSelectedDateTime={setSelectedDateTime}
+          selectedDateTime={values[FIELD_ID.SELECTED_DATE_TIME]}
+          setSelectedDateTime={(value) =>
+            setValue(FIELD_ID.SELECTED_DATE_TIME, value)
+          }
         />
       </TabPanel>
       <TabPanel
         buttonText="Next"
-        onTabButtonClick={() => setTabValue(2)}
+        onTabButtonClick={handleSubmit(onSubmit)}
         value={tabValue}
         index={1}
         title="Tell us about yourself"
