@@ -3,19 +3,17 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import { DateTime } from "luxon";
 import styled from "styled-components";
 
-import { getTimeslots, isWeekendDay } from "../utils/services";
-import { formatTimeSlot } from "../utils/formatters";
-import { Button } from "./atoms/Button";
-import { Colors } from "../styles/colors";
+import { getTimeslots, isWeekendDay } from "../../utils/services";
+import { formatTimeSlot } from "../../utils/formatters";
+import { Button } from "../atoms/Button";
 
 const TimeSlotContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  height: 200px;
-  width: 150px;
+  flex-direction: column;
+  height: 220px;
+  width: 220px;
   overflow-x: scroll;
-  border: 2px solid ${Colors.lightPink};
-  justify-content: center;
+  align-items: center;
 `;
 
 interface Props {
@@ -23,25 +21,31 @@ interface Props {
   setSelectedDateTime: (date: DateTime) => void;
 }
 
-export const DateTimeSlotPicker: FunctionComponent<Props> = ({
+export const TimeSlotTab: FunctionComponent<Props> = ({
   selectedDateTime,
   setSelectedDateTime,
 }) => {
   const now = DateTime.now();
-  const [selectedDate, setSelectedDate] = useState(now);
+  const nextMonday = now.startOf("week").plus({ week: 1 });
+  // We want this value to stay memoized until the week change, `now` changes too often
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const defaultDay = useMemo(() => (isWeekendDay(now) ? nextMonday : now), [
+    nextMonday,
+  ]);
+
+  const [selectedDate, setSelectedDate] = useState(defaultDay);
+  const timeslots = useMemo(() => getTimeslots(selectedDate), [selectedDate]);
 
   const handleDateChange = (date: DateTime | null) => {
     date && setSelectedDate(date);
   };
 
-  const timeslots = useMemo(() => getTimeslots(selectedDate), [selectedDate]);
-
   return (
     <div>
-      <h1>Select a time slot:</h1>
       <KeyboardDatePicker
         disableToolbar
         autoOk
+        color="secondary"
         disablePast
         variant="inline"
         format="dd/MM/yyyy"
