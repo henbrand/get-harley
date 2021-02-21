@@ -30,7 +30,9 @@ const TabContainer = styled.div`
 export const FormTabs: FunctionComponent = () => {
   const { register, handleSubmit, watch, setValue, errors } = useForm<Form>();
   const [tabValue, setTabValue] = useState(0);
+  const [availablePractitioners, setPractitioners] = useState<Practitioner[]>();
   const { isMobile } = useIsMobile();
+  const { sendSelectedTimeslot } = useAvailableTimeslot();
 
   useEffect(() => {
     register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
@@ -41,9 +43,23 @@ export const FormTabs: FunctionComponent = () => {
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
   };
-  const onSubmit = (data: Form) => {
-    setTabValue(2);
-  };
+
+  const onSubmit = useCallback(
+    async (data: Form) => {
+      const practitionerAvailabilty = await sendSelectedTimeslot({
+        specialityId: data[FIELD_ID.SPECIALITY].specialityId,
+        selectedDate: {
+          date: data[FIELD_ID.SELECTED_DATE_TIME]?.startOf("day"),
+          dateTime: data[FIELD_ID.SELECTED_DATE_TIME],
+          dateString: data[FIELD_ID.SELECTED_DATE_TIME]?.toISODate(),
+        },
+      });
+
+      setPractitioners(practitionerAvailabilty);
+      setTabValue(2);
+    },
+    [sendSelectedTimeslot]
+  );
   return (
     <TabContainer>
       <Tabs
@@ -59,7 +75,7 @@ export const FormTabs: FunctionComponent = () => {
           label={TAB_LABELS.USER_DETAILS}
           disabled={!values[FIELD_ID.SELECTED_DATE_TIME]}
         />
-        <Tab label={TAB_LABELS.SELECT_PRACTITIONER} />
+        <Tab label={TAB_LABELS.SELECT_PRACTITIONER} disabled={tabValue !== 2} />
       </Tabs>
       <TabPanel
         buttonText="Next"
