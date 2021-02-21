@@ -1,13 +1,19 @@
-import { FunctionComponent, useState } from "react";
-import styled from "styled-components";
+import { FunctionComponent } from "react";
 import { Typography } from "@material-ui/core";
 
 import { Button } from "../../atoms/Button";
 import { Speciality } from "../../../apiClient/types";
 import { useSpecialities } from "../../../hooks/useSpecialities";
 
-export const Specialities: FunctionComponent = () => {
-  const [chosenSpeciality, setChosenSpeciality] = useState<Speciality>();
+interface Props {
+  value: Speciality | undefined;
+  setSpeciality: (value: Speciality) => void;
+}
+
+export const Specialities: FunctionComponent<Props> = ({
+  value,
+  setSpeciality,
+}) => {
   const { specialities } = useSpecialities();
 
   return (
@@ -17,11 +23,9 @@ export const Specialities: FunctionComponent = () => {
         return (
           <Button
             key={speciality.specialityId}
-            selected={
-              chosenSpeciality?.specialityId === speciality.specialityId
-            }
+            selected={value?.specialityId === speciality.specialityId}
             buttonText={speciality.name}
-            onClick={() => setChosenSpeciality(speciality)}
+            onClick={() => setSpeciality(speciality)}
             square
           />
         );

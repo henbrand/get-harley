@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { Tabs, Tab } from "@material-ui/core";
 import styled from "styled-components";
-import { DateTime } from "luxon";
 import { useForm } from "react-hook-form";
 
 import { Colors } from "../styles/colors";
@@ -9,6 +8,7 @@ import { TimeSlotTab } from "./Tabs/TimeSlotTab";
 import { TabPanel } from "./Tabs/components/TabPanel";
 import { PersonalDetailsTab } from "./Tabs/PersonalDetailsTab";
 import { useIsMobile } from "../styles/media";
+import { FIELD_ID, Form } from "../utils/formTypes";
 
 const TAB_LABELS = {
   TIME_SLOT: "Pick a time that works for you",
@@ -27,26 +27,9 @@ const TabContainer = styled.div`
   flex-direction: column;
 `;
 
-enum FIELD_ID {
-  FIRST_NAME = "firstName",
-  LAST_NAME = "lastName",
-  EMAIL = "email",
-  CONTACT_NUMBER = "contactNumber",
-  SELECTED_DATE_TIME = "selectedDateTime",
-}
-
-type Form = {
-  [FIELD_ID.FIRST_NAME]: string;
-  [FIELD_ID.LAST_NAME]: string;
-  [FIELD_ID.EMAIL]: string;
-  [FIELD_ID.CONTACT_NUMBER]: string;
-  [FIELD_ID.SELECTED_DATE_TIME]: DateTime;
-};
-
 export const FormTabs: FunctionComponent = () => {
   const { register, handleSubmit, watch, setValue } = useForm<Form>();
   const [tabValue, setTabValue] = useState(0);
-  const [selectedDateTime, setSelectedDateTime] = useState<DateTime>();
   const { isMobile } = useIsMobile();
 
   useEffect(() => {
@@ -55,6 +38,7 @@ export const FormTabs: FunctionComponent = () => {
     register({ name: FIELD_ID.EMAIL }, { required: true });
     register({ name: FIELD_ID.CONTACT_NUMBER }, { required: true });
     register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
+    register({ name: FIELD_ID.SPECIALITY }, { required: true });
   }, [register]);
 
   const values = watch();
@@ -103,7 +87,7 @@ export const FormTabs: FunctionComponent = () => {
         index={1}
         title="Tell us about yourself"
       >
-        <PersonalDetailsTab />
+        <PersonalDetailsTab values={values} setValue={setValue} />
       </TabPanel>
       <TabPanel
         buttonText="Confirm"
