@@ -75,12 +75,16 @@ export const FormTabs: FunctionComponent = () => {
         scrollButtons="on"
       >
         <Tab label={TAB_LABELS.TIME_SLOT} />
-        <Tab label={TAB_LABELS.USER_DETAILS} /> {/* TODO: add disabled prop */}
+        <Tab
+          label={TAB_LABELS.USER_DETAILS}
+          disabled={!values[FIELD_ID.SELECTED_DATE_TIME]}
+        />
         <Tab label={TAB_LABELS.SELECT_PRACTITIONER} />
       </Tabs>
       <TabPanel
         buttonText="Next"
         onTabButtonClick={() => setTabValue(1)}
+        showButton={!!values[FIELD_ID.SELECTED_DATE_TIME]}
         value={tabValue}
         index={0}
         title="Select a time slot"

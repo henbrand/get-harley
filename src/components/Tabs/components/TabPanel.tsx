@@ -10,6 +10,7 @@ interface TabPanelProps {
   title: string;
   onTabButtonClick: () => void;
   buttonText: string;
+  showButton?: boolean;
 }
 
 const TabPanelContainer = styled.div`
@@ -35,7 +36,15 @@ const ButtonContainer = styled.div`
 `;
 
 export const TabPanel: FunctionComponent<TabPanelProps> = (props) => {
-  const { children, value, index, title, buttonText, onTabButtonClick } = props;
+  const {
+    children,
+    value,
+    index,
+    title,
+    buttonText,
+    onTabButtonClick,
+    showButton,
+  } = props;
 
   return (
     <>
@@ -45,8 +54,9 @@ export const TabPanel: FunctionComponent<TabPanelProps> = (props) => {
           <TabPanelContainer role="tabpanel" hidden={value !== index}>
             {children}
             <ButtonContainer>
-              <Button buttonText={buttonText} onClick={onTabButtonClick} />
-              {/* add disabled prop */}
+              {showButton && (
+                <Button buttonText={buttonText} onClick={onTabButtonClick} />
+              )}
             </ButtonContainer>
           </TabPanelContainer>
         </>

@@ -23,6 +23,7 @@ const StyledButton = styled(MUIButton)<{
     margin: 5px;
     border-radius: 3px;
     color: ${Colors.secondary};
+    outline: none;
     ${(p) =>
       p.square &&
       css`
@@ -35,7 +36,6 @@ const StyledButton = styled(MUIButton)<{
       css`
         background: ${Colors.primary};
         border: 2px solid ${Colors.primary};
-        outline: none;
         color: ${Colors.grey};
       `};
   }
