@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useCallback, useState } from "react";
 import { DateTime } from "luxon";
 import styled from "styled-components";
 
@@ -7,6 +7,7 @@ import { Button } from "../components/atoms/Button";
 import { Speciality } from "../apiClient/types";
 import { DateTimeSlotPicker } from "../components/DateTimeSlotPicker";
 import { useSpecialities } from "../hooks/useSpecialities";
+import { useAvailableTimeslot } from "../hooks/useAvailableTimeslot";
 
 const Logo = styled.img`
   height: 100%;
@@ -17,6 +18,13 @@ export const Home: FunctionComponent = () => {
   const [chosenSpeciality, setChosenSpeciality] = useState<Speciality>();
   const [selectedDateTime, setSelectedDateTime] = useState<DateTime>();
   const { specialities, error } = useSpecialities();
+  const { sendSelectedTimeslot } = useAvailableTimeslot();
+
+  const handleConfirm = useCallback(async () => {
+    const response = await sendSelectedTimeslot({
+      specialityId: chosenSpeciality?.specialityId,
+    });
+  }, [chosenSpeciality?.specialityId, sendSelectedTimeslot]);
 
   return (
     <div>
@@ -43,7 +51,7 @@ export const Home: FunctionComponent = () => {
         />
       )}
       {chosenSpeciality && selectedDateTime && (
-        <Button buttonText="Confirm" onClick={() => {}} />
+        <Button buttonText="Confirm" onClick={handleConfirm} />
       )}
     </div>
   );
