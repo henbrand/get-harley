@@ -9,3 +9,7 @@ export interface Practitioner {
   lastName: string;
   email: string;
 }
+
+export interface ChosenData {
+  specialityId: number;
+}

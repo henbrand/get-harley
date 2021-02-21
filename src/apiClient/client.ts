@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { Speciality, Practitioner } from "./types";
+import { Speciality, Practitioner, ChosenData } from "./types";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "http://localhost:3030/",
@@ -7,12 +7,13 @@ const apiClient: AxiosInstance = axios.create({
 
 const ENDPOINTS = {
   SPECIALITIES: "specialities",
-  AVAILABLE_TIMESLOTS: "available-timeslot",
+  AVAILABLE_TIMESLOTS: "available-practitioner",
 };
 
 export const getSpecialities = (): Promise<AxiosResponse<Speciality[]>> =>
   apiClient.get(ENDPOINTS.SPECIALITIES);
 
-export const postAvailableTimeSlot = (): Promise<
-  AxiosResponse<Practitioner[]>
-> => apiClient.post(ENDPOINTS.AVAILABLE_TIMESLOTS);
+export const callAvailablePractitioners = (
+  data: ChosenData
+): Promise<AxiosResponse<Practitioner[]>> =>
+  apiClient.post(ENDPOINTS.AVAILABLE_TIMESLOTS, data);

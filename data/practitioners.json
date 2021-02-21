@@ -1,26 +1,26 @@
 [
   {
     "practitionerId": 1,
-    "firstName": " Anna",
-    "lastName": " Doctor",
+    "firstName": "Anna",
+    "lastName": "Doctor",
     "email": " anna1238901@gmail.com"
   },
   {
     "practitionerId": 2,
-    "firstName": " Min",
-    "lastName": " Doktor",
-    "email": " minopsopsops@gmail.com"
+    "firstName": "Min",
+    "lastName": "Doktor",
+    "email": "minopsopsops@gmail.com"
   },
   {
     "practitionerId": 3,
-    "firstName": " Asha",
-    "lastName": " Doc",
-    "email": " ashadoc1238901@gmail.com"
+    "firstName": "Asha",
+    "lastName": "Doc",
+    "email": "ashadoc1238901@gmail.com"
   },
   {
     "practitionerId": 4,
-    "firstName": " Yisheng",
-    "lastName": " Dr",
-    "email": " yishengdr1238901@gmail.com"
+    "firstName": "Yisheng",
+    "lastName": "Dr",
+    "email": "yishengdr1238901@gmail.com"
   }
 ]
