@@ -19,7 +19,7 @@ export const PersonalDetailsTab: FunctionComponent<Props> = ({
         value={values.speciality}
         setSpeciality={(value) => setValue(FIELD_ID.SPECIALITY, value)}
       />
-      <PersonalDetails />
+      <PersonalDetails values={values} setValue={setValue} />
     </div>
   );
 };
