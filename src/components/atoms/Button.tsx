@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import styled, { css } from "styled-components";
+import { Button as MUIButton } from "@material-ui/core/";
 
 import { Colors } from "../../styles/colors";
 
@@ -10,29 +11,34 @@ interface Props {
   square?: boolean;
 }
 
-const StyledButton = styled.button<{
+const StyledButton = styled(MUIButton)<{
   square?: boolean;
   selected: boolean | undefined;
 }>`
-  background: ${Colors.primary};
-  border: 1px solid ${Colors.primary};
-  width: 100px;
-  height: 50px;
-  margin: 5px;
-  border-radius: 3px;
-  ${(p) =>
-    p.square &&
-    css`
-      border-radius: 10px;
-      height: 100px;
-    `};
-  ${(p) =>
-    p.selected &&
-    css`
-      background: ${Colors.lightPink};
-      border: 2px solid ${Colors.primary};
-      outline: none;
-    `};
+  && {
+    background: ${Colors.lightPink};
+    border: 1px solid ${Colors.secondary};
+    width: 200px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 3px;
+    color: ${Colors.secondary};
+    ${(p) =>
+      p.square &&
+      css`
+        border-radius: 10px;
+        width: 120px;
+        height: 120px;
+      `};
+    ${(p) =>
+      p.selected &&
+      css`
+        background: ${Colors.primary};
+        border: 2px solid ${Colors.primary};
+        outline: none;
+        color: ${Colors.grey};
+      `};
+  }
 `;
 
 export const Button: FunctionComponent<Props> = ({
@@ -42,7 +48,12 @@ export const Button: FunctionComponent<Props> = ({
   square,
 }) => {
   return (
-    <StyledButton square={square} selected={selected} onClick={onClick}>
+    <StyledButton
+      color="secondary"
+      square={square}
+      selected={selected}
+      onClick={onClick}
+    >
       {buttonText}
     </StyledButton>
   );
