@@ -41,7 +41,6 @@ export const Button: FunctionComponent<Props> = ({
   selected,
   square,
 }) => {
-  console.log(selected);
   return (
     <StyledButton square={square} selected={selected} onClick={onClick}>
       {buttonText}

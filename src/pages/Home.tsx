@@ -25,6 +25,7 @@ export const Home: FunctionComponent = () => {
       {specialities?.map((speciality) => {
         return (
           <Button
+            key={speciality.specialityId}
             selected={
               chosenSpeciality?.specialityId === speciality.specialityId
             }

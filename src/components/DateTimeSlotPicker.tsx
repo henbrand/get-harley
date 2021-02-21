@@ -61,9 +61,11 @@ export const DateTimeSlotPicker: FunctionComponent<Props> = ({
         <TimeSlotContainer>
           {timeslots.map((timeslot) => {
             const { startTime, endTime } = timeslot;
+            const buttonText = formatTimeSlot(startTime, endTime);
             return (
               <Button
-                buttonText={formatTimeSlot(startTime, endTime)}
+                key={buttonText}
+                buttonText={buttonText}
                 selected={selectedDateTime?.equals(startTime)}
                 onClick={() => setSelectedDateTime(startTime)}
               />
