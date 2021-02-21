@@ -28,15 +28,37 @@ const getAvailability = (date, email) =>
 app.post("/available-practitioner", async (req, res) => {
   const { body } = req;
 
-  const practitionersForASpeciality = practionerSpecialities
-    .filter(
-      (practionerSpeciality) =>
-        practionerSpeciality.specialityId === body.specialityId
-    )
-    .map((practionerSpeciality) => practionerSpeciality.practitionerId);
+  const groupBySpeciality = () => {
+    const map = new Map();
+    practionerSpecialities.forEach((item) => {
+      const key = item.practitionerId;
+      const collection = map.get(key);
+      if (!collection) {
+        map.set(key, { specialities: [item.specialityId] });
+      } else {
+        collection.specialities.push(item.specialityId);
+      }
+    });
+    return map;
+  };
 
-  const practitionerBySpeciality = practitioners.filter((practitioner) =>
-    practitionersForASpeciality.includes(practitioner.practitionerId)
+  const practionerDetails = groupBySpeciality();
+
+  practitioners.forEach((practitioner) => {
+    const obj = practionerDetails.get(practitioner.practitionerId);
+    return practionerDetails.set(practitioner.practitionerId, {
+      ...obj,
+      ...practitioner,
+    });
+  });
+
+  const getPractitionersBySpeciality = (specialitiId) =>
+    Array.from(practionerDetails.values()).filter((item) =>
+      item.specialities.includes(specialitiId)
+    );
+
+  const practitionerBySpeciality = getPractitionersBySpeciality(
+    body.specialityId
   );
 
   const practitionerAvailabiliy = await Promise.all(
@@ -61,7 +83,10 @@ app.post("/available-practitioner", async (req, res) => {
               DateTime.fromISO(body.selectedDate.dateTime)
             )
         );
-        return { practitioner, isAvailable: findSelectedTimeSlot.isAvailable };
+        return {
+          ...practitioner,
+          isAvailable: findSelectedTimeSlot.isAvailable,
+        };
       } catch (e) {
         console.log("e", e);
       }
