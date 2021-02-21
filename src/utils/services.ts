@@ -13,7 +13,7 @@ export type TimeSlot = {
 
 export const getInitialSlot = (selectedDate: DateTime) => {
   if (
-    selectedDate.hasSame(DateTime.local(), "day") && // this condition
+    selectedDate.hasSame(DateTime.local(), "day") &&
     selectedDate.hour > timeSettings.openTime
   ) {
     return selectedDate.hour + 1;

@@ -1,0 +1,54 @@
+[
+  {
+    "practitionerId": 1,
+    "specialityId": 2
+  },
+  {
+    "practitionerId": 1,
+    "specialityId": 3
+  },
+  {
+    "practitionerId": 1,
+    "specialityId": 4
+  },
+  {
+    "practitionerId": 1,
+    "specialityId": 6
+  },
+  {
+    "practitionerId": 2,
+    "specialityId": 1
+  },
+  {
+    "practitionerId": 2,
+    "specialityId": 5
+  },
+  {
+    "practitionerId": 2,
+    "specialityId": 6
+  },
+  {
+    "practitionerId": 3,
+    "specialityId": 1
+  },
+  {
+    "practitionerId": 3,
+    "specialityId": 4
+  },
+  {
+    "practitionerId": 3,
+    "specialityId": 6
+  },
+  {
+    "practitionerId": 4,
+    "specialityId": 2
+  },
+  {
+    "practitionerId": 4,
+    "specialityId": 3
+  },
+  {
+    "practitionerId": 4,
+    "specialityId": 6
+  }
+]

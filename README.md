@@ -11,12 +11,12 @@ Yarn at v1.2.0+.
 ```
 ### To get set up:
 
-In the root directory:
+From the root directory:
 
 1. To install the project dependencies, run `yarn install`
 2. To run the app in development mode, run `yarn start`
 3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-4. Get the server up and running, run `node server.js`, you can view the content of the endpoints at [http://localhost:3030](http://localhost:3030):
+4. Get the server up and running, run `node server/server.js`, you can view the content of the endpoints at [http://localhost:3030](http://localhost:3030):
     - `/practioners`
     - `/specialities`
 
