@@ -19,12 +19,20 @@ export const Home: FunctionComponent = () => {
   const [selectedDateTime, setSelectedDateTime] = useState<DateTime>();
   const { specialities, error } = useSpecialities();
   const { sendSelectedTimeslot } = useAvailableTimeslot();
+  const [practitioners, setPractitioners] = useState<Practitioner[]>();
 
   const handleConfirm = useCallback(async () => {
-    const response = await sendSelectedTimeslot({
+    const practitionerAvailabilty = await sendSelectedTimeslot({
       specialityId: chosenSpeciality?.specialityId,
+      selectedDate: {
+        date: selectedDateTime?.startOf("day"),
+        dateTime: selectedDateTime,
+        dateString: selectedDateTime?.toISODate(),
+      },
     });
-  }, [chosenSpeciality?.specialityId, sendSelectedTimeslot]);
+
+    setPractitioners(practitionerAvailabilty);
+  }, [chosenSpeciality?.specialityId, sendSelectedTimeslot, selectedDateTime]);
 
   return (
     <div>

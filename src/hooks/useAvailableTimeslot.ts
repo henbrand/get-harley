@@ -7,7 +7,7 @@ export const useAvailableTimeslot = () => {
   const sendSelectedTimeslot = useCallback(async (data: any) => {
     try {
       const response = await callAvailablePractitioners(data);
-      return response;
+      return response.data;
     } catch (error) {
       setError(error?.message);
     }

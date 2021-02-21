@@ -8,6 +8,7 @@ export interface Practitioner {
   firstName: string;
   lastName: string;
   email: string;
+  specialities: number[];
 }
 
 export interface ChosenData {
