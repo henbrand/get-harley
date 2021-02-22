@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Speciality, Practitioner, ChosenData } from "./types";
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: "http://localhost:3030/",
+  baseURL: "https://get-harley.vercel.app/api/",
 });
 
 const ENDPOINTS = {

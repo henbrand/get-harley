@@ -16,6 +16,7 @@ export const PractitionerDetailsTab: FunctionComponent<{
       ) : (
         practitioners?.map((practitioner) => (
           <Button
+            key={practitioner.practitionerId}
             buttonText={`${practitioner.firstName} - ${practitioner.lastName}`}
             onClick={() => setSelectedPractitioner(practitioner)}
             selected={

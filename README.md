@@ -1,4 +1,18 @@
 
+# Get Harley Test App
+
+- AAUser, I can chose a practitioner based on availability and speciality
+    - Go to https://get-harley.vercel.app/
+    - Choose a timeslot
+    - Choose a speciality
+    - Enter details
+    - Click Next
+    - See available practitioners
+    - Select available practitioner
+    - Click Confirm
+    - See Thank You message
+
+
 ## Installation
 
 ### Prerequistes:
@@ -16,9 +30,9 @@ From the root directory:
 1. To install the project dependencies, run `yarn install`
 2. To run the app in development mode, run `yarn start`
 3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-4. Get the server up and running, run `node api/index.js`, you can view the content of the endpoints at [http://localhost:3030](http://localhost:3030):
-    - [/practioners](http://localhost:3030/practioners)
-    - [/specialities](http://localhost:3030/specialities)
+4. You can view the content of the endpoints at:
+    - [/practioners](https://get-harley.vercel.app/api/practioners)
+    - [/specialities](https://get-harley.vercel.app/api/specialities)
 
 ### Tests:
 
