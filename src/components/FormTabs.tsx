@@ -12,6 +12,7 @@ import { useIsMobile } from "../styles/media";
 import { FIELD_ID, Form } from "../utils/formTypes";
 import { useAvailableTimeslot } from "../hooks/useAvailableTimeslot";
 import { Practitioner } from "../apiClient/types";
+import { ConfirmModal } from "./ConfirmModal";
 
 const TAB_LABELS = {
   TIME_SLOT: "Pick a time that works for you",
@@ -35,11 +36,11 @@ export const FormTabs: FunctionComponent = () => {
 
   const [tabValue, setTabValue] = useState(0);
   const [availablePractitioners, setPractitioners] = useState<Practitioner[]>();
-
   const { isMobile } = useIsMobile();
   const { sendSelectedTimeslot } = useAvailableTimeslot();
 
-  console.log("🚀 ~ file: FormTabs.tsx ~ line 32 ~ errors", errors);
+  const [confirmedValues, setConfirmedValues] = useState<Form>();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
@@ -71,7 +72,12 @@ export const FormTabs: FunctionComponent = () => {
     [sendSelectedTimeslot]
   );
 
-  // const onConfirmSubmit = useCallback(async (data: Form) => {}, []);
+  // TODO: Create an endpoint to send this data to
+  const onConfirmSubmit = useCallback(async (data: Form) => {
+    setConfirmedValues(data);
+    setOpen(true);
+  }, []);
+
   return (
     <TabContainer>
       <Tabs
@@ -121,18 +127,23 @@ export const FormTabs: FunctionComponent = () => {
       </TabPanel>
       <TabPanel
         buttonText="Confirm"
-        onTabButtonClick={() => {}} //TODO: confirm practitioner
+        onTabButtonClick={handleSubmit(onConfirmSubmit)}
         value={tabValue}
         index={2}
         title="Select your practitioner"
+        showButton
       >
         <PractitionerDetailsTab
+          selectedPractitioner={values[FIELD_ID.SELECTED_PRACTITIONER]}
           practitioners={availablePractitioners}
           setSelectedPractitioner={(value) =>
             setValue(FIELD_ID.SELECTED_PRACTITIONER, value)
           }
         />
       </TabPanel>
+      {confirmedValues && (
+        <ConfirmModal details={confirmedValues} open={open} setOpen={setOpen} />
+      )}
     </TabContainer>
   );
 };
