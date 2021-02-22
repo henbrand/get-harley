@@ -32,15 +32,18 @@ const TabContainer = styled.div`
 `;
 
 export const FormTabs: FunctionComponent = () => {
+  const { isMobile } = useIsMobile();
+  const [tabValue, setTabValue] = useState(0);
+
   const { register, handleSubmit, watch, setValue, errors } = useForm<Form>();
 
-  const [tabValue, setTabValue] = useState(0);
   const [availablePractitioners, setPractitioners] = useState<Practitioner[]>();
-  const { isMobile } = useIsMobile();
   const { sendSelectedTimeslot } = useAvailableTimeslot();
 
   const [confirmedValues, setConfirmedValues] = useState<Form>();
   const [open, setOpen] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     register({ name: FIELD_ID.SELECTED_DATE_TIME }, { required: true });
@@ -49,7 +52,6 @@ export const FormTabs: FunctionComponent = () => {
   }, [register]);
 
   const values = watch();
-  console.log("🚀 ~ file: FormTabs.tsx ~ line 59 ~ values", values);
 
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
@@ -57,6 +59,7 @@ export const FormTabs: FunctionComponent = () => {
 
   const onSubmit = useCallback(
     async (data: Form) => {
+      setIsLoading(true);
       const practitionerAvailabilty = await sendSelectedTimeslot({
         specialityId: data[FIELD_ID.SPECIALITY].specialityId,
         selectedDate: {
@@ -67,6 +70,7 @@ export const FormTabs: FunctionComponent = () => {
       });
 
       setPractitioners(practitionerAvailabilty);
+      setIsLoading(false);
       setTabValue(2);
     },
     [sendSelectedTimeslot]
@@ -116,7 +120,7 @@ export const FormTabs: FunctionComponent = () => {
         value={tabValue}
         index={1}
         title="Tell us about yourself"
-        showButton
+        showButton={!isLoading}
       >
         <PersonalDetailsTab
           values={values}
