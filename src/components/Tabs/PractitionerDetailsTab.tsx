@@ -5,20 +5,26 @@ import { Practitioner } from "../../apiClient/types";
 
 // TODO: add other specialities - Also specialises in
 export const PractitionerDetailsTab: FunctionComponent<{
+  selectedPractitioner: Practitioner | undefined;
   practitioners: Practitioner[] | undefined;
   setSelectedPractitioner: (practitioner: Practitioner) => void;
-}> = ({ practitioners, setSelectedPractitioner }) => {
+}> = ({ selectedPractitioner, practitioners, setSelectedPractitioner }) => {
   return (
-    <>
-      {practitioners?.map((practitioner) => (
-        <Button
-          buttonText={`${practitioner.firstName} - ${practitioner.lastName}`}
-          onClick={() => setSelectedPractitioner(practitioner)}
-        />
-      ))}
-      {practitioners?.length === 0 && (
+    <div>
+      {practitioners?.length === 0 ? (
         <p>No practitioners available, please select another slot</p>
+      ) : (
+        practitioners?.map((practitioner) => (
+          <Button
+            buttonText={`${practitioner.firstName} - ${practitioner.lastName}`}
+            onClick={() => setSelectedPractitioner(practitioner)}
+            selected={
+              practitioner.practitionerId ===
+              selectedPractitioner?.practitionerId
+            }
+          />
+        ))
       )}
-    </>
+    </div>
   );
 };
