@@ -1,3 +1,5 @@
+this is a take home coding exercise.
+
 
 # Get Harley Test App
 
@@ -58,7 +60,7 @@ Why react?
 - Used by Facebook, so they are not likely to deprecate it (vs Angular, which is not used by Google)
 - Should a mobile app be needed, you can use React Native and have a crossfunctional Mobile/Web dev team
 
-The express server was temporary - the tech stack I would have chosen for this is Django.
+The express server to get up and running quickly another tech stack of choice would be Django.
 
 Why Django?
 - Django ORM, to do performant SQL queries without the SQL 
@@ -67,11 +69,3 @@ Why Django?
 - django-rest-framework - to create endpoints
 - [djangorestframework-camel-case](https://github.com/vbabiy/djangorestframework-camel-case)
 - Python
-
-
-
-
-
-
-
-
